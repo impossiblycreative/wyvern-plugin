@@ -1,1 +1,1 @@
-# Wyvern Pluging - A Starter Plugin
+# Wyvern Plugin - A Starter Plugin
