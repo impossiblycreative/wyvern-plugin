@@ -76,6 +76,8 @@ class Wyvern_Plugin {
         // Set our plugin's internal name
         $this->plugin_name = 'wyvern-plugin';
 
+        // Load any additional classes here
+
         // Set our plugin's textdomain
         add_action( 'init', array( $this, 'set_textdomain' ) );
 

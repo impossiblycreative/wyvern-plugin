@@ -33,18 +33,62 @@ if ( ! defined( 'WPINC' ) ) {
 /* Plugin Version - UPDATE THIS */
 define( 'WYVERN_PLUGIN_VERSION', '1.0.0' );
 
+/* Include all of the custom post type classes in the folder */
+function wyvern_plugin_include_CPTs() {
+
+    // Set our glob path.
+    $glob_path = plugin_dir_path( __FILE__ ) . 'post-types/post-type-classes/*.php';
+
+    // Get all the possible CPT classes
+    $classes = glob( $glob_path );
+    
+    // Require the base class first
+    require_once plugin_dir_path( __FILE__ ) . 'post-types/class-wyvern-cpt-base.php';
+
+    // Load the remaining CPTs
+    foreach ( $classes as $class ) {
+        require_once $class;
+    }
+}
+add_action( 'init', 'wyvern_plugin_include_CPTs' );
+
+/* Register all of the custom post types - MUST BE DONE MANUALLY */
+function wyvern_plugin_register_CPTs() {
+
+    // Get an instance of each post type
+
+    // Call the registration function
+
+    // Call the taxonomy setup functions if needed here
+}
+add_action( 'init', 'wyvern_plugin_register_CPTs' );
+
 /* Define the activation hooks */
-function activate_wyvern_plugin() {
-    // Need to do stuff on activation? It goes here.
+function wyvern_plugin_activate() {
+
+    // Create our custom post types
+    wyvern_plugin_include_CPTs();
+    wyvern_plugin_register_CPTs();
+
+    // Reset the permalinks
+    flush_rewrite_rules();
+
+    // Need to do other stuff on activation? It goes here.
 }
 
-function deactivate_wyvern_plugin() {
-    // Need to do stuff on deactivation? It goes here.
+function wyvern_plugin_deactivate() {
+    
+    // Destroy our custom post types using unregister_post_type()
+
+    // Reset the permalinks
+    flush_rewrite_rules();
+
+    // Need to do other stuff on deactivation? It goes here.
 }
 
 /* Set the activation hooks */
-register_activation_hook( __FILE__, 'activate_wyvern_plugin' );
-register_deactivation_hook( __FILE__, 'deactivate_wyvern_plugin' );
+register_activation_hook( __FILE__, 'wyvern_plugin_activate' );
+register_deactivation_hook( __FILE__, 'wyvern_plugin_deactivate' );
 
 /**
  * Include our main plugin class, where we'll connect all the other pieces.
