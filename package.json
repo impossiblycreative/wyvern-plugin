@@ -1,0 +1,25 @@
+{
+  "name": "wyvern-plugin",
+  "version": "1.0.0",
+  "description": "Test block",
+  "main": "blocks/build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run build:block-00-test && npm run build:block-01-basic",
+    "build:block-00-test": "wp-scripts build blocks/block-00-test/src/index.js --output-path=blocks/block-00-test/build",
+    "build:block-01-basic": "wp-scripts build blocks/block-01-basic/src/index.js --output-path=blocks/block-01-basic/build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/impossiblycreative/wyvern-plugin.git"
+  },
+  "author": "Adam Soucie",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/impossiblycreative/wyvern-plugin/issues"
+  },
+  "homepage": "https://github.com/impossiblycreative/wyvern-plugin#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "6.1.1"
+  }
+}

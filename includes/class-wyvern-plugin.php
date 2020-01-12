@@ -92,6 +92,9 @@ class Wyvern_Plugin {
         // Make sure all of our custom hooks are declared
         $this->declare_admin_hooks();
         $this->declare_public_hooks();
+
+        // Register our custom Gutenberg blocks
+        add_action( 'init', array( $this, 'register_custom_blocks' ) );
     }
 
     /**
@@ -99,6 +102,44 @@ class Wyvern_Plugin {
      */
     public function set_textdomain() {
         load_plugin_textdomain( 'wyvern-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    }
+
+    /** 
+     * Register a custom block.
+     * 
+     * @since   1.0.0
+     * @access  private
+     * @var     string      $block_name The namespace friendly name of the block
+     */
+    private function register_custom_block( $block_name ) {
+        $plugin_path = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name;
+
+        // Automatically load dependencies and version
+        $asset_file = include( $plugin_path . '/build/index.asset.php' );
+
+        // Make the script available to WordPress
+        wp_register_script( 
+            $block_name, 
+            plugins_url( 'blocks/' . $block_name . '/build/index.js', __DIR__ ), 
+            $asset_file['dependencies'], 
+            $asset_file['version'] 
+        );
+
+        // Register the block
+        register_block_type( 
+            'wyvern-plugin/' . $block_name, 
+            array( 'editor_script' => $block_name )
+        );
+    }
+
+    /**
+     * Register our blocks.
+     */
+    public function register_custom_blocks() {
+
+        // Register each block we need
+        $this->register_custom_block( 'block-00-test' );
+        $this->register_custom_block( 'block-01-basic' );
     }
 
     /**
