@@ -5,9 +5,10 @@
   "main": "blocks/build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:block-00-test && npm run build:block-01-basic",
+    "build": "npm run build:block-00-test && npm run build:block-01-basic && npm run build:block-02-basic-with-stylesheet",
     "build:block-00-test": "wp-scripts build blocks/block-00-test/src/index.js --output-path=blocks/block-00-test/build",
-    "build:block-01-basic": "wp-scripts build blocks/block-01-basic/src/index.js --output-path=blocks/block-01-basic/build"
+    "build:block-01-basic": "wp-scripts build blocks/block-01-basic/src/index.js --output-path=blocks/block-01-basic/build",
+    "build:block-02-basic-with-stylesheet": "wp-scripts build blocks/block-02-basic-with-stylesheet/src/index.js --output-path=blocks/block-02-basic-with-stylesheet/build"
   },
   "repository": {
     "type": "git",

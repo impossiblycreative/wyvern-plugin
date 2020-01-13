@@ -102,7 +102,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('wyvern-plugin/block-00-test', {
-  title: 'Basic Example',
+  title: 'Basic Example #0',
   icon: 'smiley',
   category: 'layout',
   edit: function edit() {

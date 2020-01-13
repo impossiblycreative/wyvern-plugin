@@ -1,9 +1,15 @@
 import { registerBlockType } from '@wordpress/blocks';
 
+const blockStyle = {
+    backgroundColor: '#900',
+    color: '#fff',
+    padding: '20px',
+};
+
 registerBlockType( 'wyvern-plugin/block-01-basic', {
-    title:      'Basic Example #2',
+    title:      'Basic Example #1',
     icon:       'smiley',
     category:   'layout',
-    edit:       () => <div>Hello, World!</div>,
-    save:       () => <div>Hello, World!</div>,
+    edit:       () => <div style={ blockStyle }>Hello, World!</div>,
+    save:       () => <div style={ blockStyle }>Hello, World!</div>,
 } );

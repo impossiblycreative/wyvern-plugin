@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/block-01-basic/src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/block-02-basic-with-stylesheet/src/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./blocks/block-01-basic/src/index.js":
-/*!********************************************!*\
-  !*** ./blocks/block-01-basic/src/index.js ***!
-  \********************************************/
+/***/ "./blocks/block-02-basic-with-stylesheet/src/index.js":
+/*!************************************************************!*\
+  !*** ./blocks/block-02-basic-with-stylesheet/src/index.js ***!
+  \************************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -101,24 +101,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
 
 
-var blockStyle = {
-  backgroundColor: '#900',
-  color: '#fff',
-  padding: '20px'
-};
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('wyvern-plugin/block-01-basic', {
-  title: 'Basic Example #1',
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('wyvern-plugin/block-02-basic-with-stylesheet', {
+  title: 'Basic Example #2 - Adding Stylesheets',
   icon: 'smiley',
   category: 'layout',
-  edit: function edit() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      style: blockStyle
-    }, "Hello, World!");
+  example: {},
+  edit: function edit(_ref) {
+    var className = _ref.className;
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", {
+      className: className
+    }, "Hello, World, again.");
   },
   save: function save() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      style: blockStyle
-    }, "Hello, World!");
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("p", null, "Hello, World, again.");
   }
 });
 

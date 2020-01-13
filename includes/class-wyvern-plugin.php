@@ -112,7 +112,9 @@ class Wyvern_Plugin {
      * @var     string      $block_name The namespace friendly name of the block
      */
     private function register_custom_block( $block_name ) {
-        $plugin_path = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name;
+        $plugin_path    = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name;
+        $styles         = plugins_url( 'blocks/' . $block_name . '/css/style.css', __DIR__ );
+        $editor_styles  = plugins_url( 'blocks/' . $block_name . '/css/editor.css', __DIR__ );
 
         // Automatically load dependencies and version
         $asset_file = include( $plugin_path . '/build/index.asset.php' );
@@ -125,11 +127,27 @@ class Wyvern_Plugin {
             $asset_file['version'] 
         );
 
-        // Register the block
-        register_block_type( 
-            'wyvern-plugin/' . $block_name, 
-            array( 'editor_script' => $block_name )
+        // Register the front-end and editor stylesheets
+        wp_register_style(
+            $block_name . '-editor',
+            $editor_styles,
+            array( 'wp-edit-blocks' ), 
+            $asset_file['version']
         );
+
+        wp_register_style(
+            $block_name,
+            $styles,
+            array(), 
+            $asset_file['version']
+        );
+
+        // Register the block
+        register_block_type( 'wyvern-plugin/' . $block_name, array( 
+            'style'         => $block_name,
+            'editor_style'  => $block_name . '-editor',
+            'editor_script' => $block_name
+        ) );
     }
 
     /**
@@ -140,6 +158,7 @@ class Wyvern_Plugin {
         // Register each block we need
         $this->register_custom_block( 'block-00-test' );
         $this->register_custom_block( 'block-01-basic' );
+        $this->register_custom_block( 'block-02-basic-with-stylesheet' );
     }
 
     /**
