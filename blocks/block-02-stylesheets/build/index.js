@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/block-02-basic-with-stylesheet/src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/block-02-stylesheets/src/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./blocks/block-02-basic-with-stylesheet/src/index.js":
-/*!************************************************************!*\
-  !*** ./blocks/block-02-basic-with-stylesheet/src/index.js ***!
-  \************************************************************/
+/***/ "./blocks/block-02-stylesheets/src/index.js":
+/*!**************************************************!*\
+  !*** ./blocks/block-02-stylesheets/src/index.js ***!
+  \**************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -101,8 +101,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
 
 
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('wyvern-plugin/block-02-basic-with-stylesheet', {
-  title: 'Basic Example #2 - Adding Stylesheets',
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('wyvern-plugin/block-02-stylesheets', {
+  title: 'Block Example #2 - Adding Stylesheets',
   icon: 'smiley',
   category: 'layout',
   example: {},

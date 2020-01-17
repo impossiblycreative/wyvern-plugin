@@ -156,9 +156,10 @@ class Wyvern_Plugin {
     public function register_custom_blocks() {
 
         // Register each block we need
-        $this->register_custom_block( 'block-00-test' );
         $this->register_custom_block( 'block-01-basic' );
-        $this->register_custom_block( 'block-02-basic-with-stylesheet' );
+        $this->register_custom_block( 'block-02-stylesheets' );
+        $this->register_custom_block( 'block-03-attributes' );
+        $this->register_custom_block( 'block-04-toolbar' );
     }
 
     /**

@@ -7,7 +7,7 @@ const blockStyle = {
 };
 
 registerBlockType( 'wyvern-plugin/block-01-basic', {
-    title:      'Basic Example #1',
+    title:      'Block Example #1',
     icon:       'smiley',
     category:   'layout',
     edit:       () => <div style={ blockStyle }>Hello, World!</div>,

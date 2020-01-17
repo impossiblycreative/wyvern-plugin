@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/block-00-test/src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/block-04-toolbar/src/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./blocks/block-00-test/src/index.js":
-/*!*******************************************!*\
-  !*** ./blocks/block-00-test/src/index.js ***!
-  \*******************************************/
+/***/ "./blocks/block-04-toolbar/src/index.js":
+/*!**********************************************!*\
+  !*** ./blocks/block-04-toolbar/src/index.js ***!
+  \**********************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -99,19 +99,82 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 
 
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('wyvern-plugin/block-00-test', {
-  title: 'Basic Example #0',
+
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('wyern-plugin/block-04-toolbar', {
+  title: 'Block Example #4 - Adding a toolbar',
   icon: 'smiley',
   category: 'layout',
-  edit: function edit() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, "Hola, mundo!");
+  attributes: {
+    content: {
+      type: 'array',
+      source: 'children',
+      selector: 'p'
+    },
+    alignment: {
+      type: 'string',
+      default: 'none'
+    }
   },
-  save: function save() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, "Hola, mundo!");
+  example: {
+    attributes: {
+      content: 'Hello, World!',
+      alignment: 'right'
+    }
+  },
+  edit: function edit(props) {
+    var _props$attributes = props.attributes,
+        content = _props$attributes.content,
+        alignment = _props$attributes.alignment,
+        className = props.className;
+
+    var onChangeContent = function onChangeContent(newContent) {
+      props.setAttributes({
+        content: newContent
+      });
+    };
+
+    var onChangeAlignment = function onChangeAlignment(newAlignment) {
+      props.setAttributes({
+        alignment: newAlignment === undefined ? 'none' : newAlignment
+      });
+    };
+
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["BlockControls"], null, Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["AlignmentToolbar"], {
+      value: alignment,
+      onChange: onChangeAlignment
+    })), Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+      className: className,
+      style: {
+        textAlign: alignment
+      },
+      tagName: "p",
+      onChange: onChangeContent,
+      value: content
+    }));
+  },
+  save: function save(props) {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
+      className: "block-04-toolbar-align-".concat(props.attributes.alignment),
+      tagName: "p",
+      value: props.attributes.content
+    });
   }
 });
+
+/***/ }),
+
+/***/ "@wordpress/block-editor":
+/*!**********************************************!*\
+  !*** external {"this":["wp","blockEditor"]} ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["blockEditor"]; }());
 
 /***/ }),
 

@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/block-01-basic/src/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./blocks/block-03-attributes/src/index.js");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./blocks/block-01-basic/src/index.js":
-/*!********************************************!*\
-  !*** ./blocks/block-01-basic/src/index.js ***!
-  \********************************************/
+/***/ "./blocks/block-03-attributes/src/index.js":
+/*!*************************************************!*\
+  !*** ./blocks/block-03-attributes/src/index.js ***!
+  \*************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -99,28 +99,63 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_element__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
+/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__);
 
 
-var blockStyle = {
-  backgroundColor: '#900',
-  color: '#fff',
-  padding: '20px'
-};
-Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('wyvern-plugin/block-01-basic', {
-  title: 'Block Example #1',
+
+Object(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_1__["registerBlockType"])('wyvern-plugin/block-03-attributes', {
+  title: 'Block Example #3 - Adding Attributes',
   icon: 'smiley',
   category: 'layout',
-  edit: function edit() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      style: blockStyle
-    }, "Hello, World!");
+  attributes: {
+    content: {
+      type: 'array',
+      source: 'children',
+      selector: 'p'
+    }
   },
-  save: function save() {
-    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])("div", {
-      style: blockStyle
-    }, "Hello, World!");
+  example: {
+    attributes: {
+      content: 'Hello, World!'
+    }
+  },
+  edit: function edit(props) {
+    var content = props.attributes.content,
+        setAttributes = props.setAttributes,
+        className = props.className;
+
+    var onChangeContent = function onChangeContent(newContent) {
+      setAttributes({
+        content: newContent
+      });
+    };
+
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"], {
+      tagName: "p",
+      className: className,
+      onChange: onChangeContent,
+      value: content
+    });
+  },
+  save: function save(props) {
+    return Object(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__["createElement"])(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__["RichText"].Content, {
+      tagName: "p",
+      value: props.attributes.content
+    });
   }
 });
+
+/***/ }),
+
+/***/ "@wordpress/block-editor":
+/*!**********************************************!*\
+  !*** external {"this":["wp","blockEditor"]} ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function() { module.exports = this["wp"]["blockEditor"]; }());
 
 /***/ }),
 

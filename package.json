@@ -5,10 +5,12 @@
   "main": "blocks/build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:block-00-test && npm run build:block-01-basic && npm run build:block-02-basic-with-stylesheet",
-    "build:block-00-test": "wp-scripts build blocks/block-00-test/src/index.js --output-path=blocks/block-00-test/build",
+    "build": "npm run build:block-01-basic && npm run build:block-02-stylesheets && npm run build:block-03-attributes && npm run build:block-04-toolbar",
     "build:block-01-basic": "wp-scripts build blocks/block-01-basic/src/index.js --output-path=blocks/block-01-basic/build",
-    "build:block-02-basic-with-stylesheet": "wp-scripts build blocks/block-02-basic-with-stylesheet/src/index.js --output-path=blocks/block-02-basic-with-stylesheet/build"
+    "build:block-02-stylesheets": "wp-scripts build blocks/block-02-stylesheets/src/index.js --output-path=blocks/block-02-stylesheets/build",
+    "build:block-03-attributes": "wp-scripts build blocks/block-03-attributes/src/index.js --output-path=blocks/block-03-attributes/build",
+    "build:block-04-toolbar": "wp-scripts build blocks/block-04-toolbar/src/index.js --output-path=blocks/block-04-toolbar/build",
+    "scaffold-block": ""
   },
   "repository": {
     "type": "git",

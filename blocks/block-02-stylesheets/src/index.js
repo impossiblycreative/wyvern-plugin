@@ -1,7 +1,7 @@
 import { registerBlockType } from '@wordpress/blocks';
 
-registerBlockType( 'wyvern-plugin/block-02-basic-with-stylesheet', {
-    title:      'Basic Example #2 - Adding Stylesheets',
+registerBlockType( 'wyvern-plugin/block-02-stylesheets', {
+    title:      'Block Example #2 - Adding Stylesheets',
     icon:       'smiley',
     category:   'layout',
     
