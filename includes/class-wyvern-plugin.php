@@ -104,6 +104,10 @@ class Wyvern_Plugin {
         load_plugin_textdomain( 'wyvern-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
     }
 
+    public function test_function($attributes, $content) {
+        echo '<p>testing</p>';
+    }
+
     /** 
      * Register a custom block.
      * 
@@ -112,9 +116,14 @@ class Wyvern_Plugin {
      * @var     string      $block_name The namespace friendly name of the block
      */
     private function register_custom_block( $block_name ) {
-        $plugin_path    = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name;
-        $styles         = plugins_url( 'blocks/' . $block_name . '/css/style.css', __DIR__ );
-        $editor_styles  = plugins_url( 'blocks/' . $block_name . '/css/editor.css', __DIR__ );
+        $plugin_path        = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name;
+        $render_file        = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name . '/src/render.php';
+        $render_callback    = str_replace( '-', '_', $block_name ) . '_render_callback';
+        $styles             = plugins_url( 'blocks/' . $block_name . '/css/style.css', __DIR__ );
+        $editor_styles      = plugins_url( 'blocks/' . $block_name . '/css/editor.css', __DIR__ );
+
+        // Clear the stat cache so that file_exists behaves properly
+        clearstatcache();
 
         // Automatically load dependencies and version
         $asset_file = include( $plugin_path . '/build/index.asset.php' );
@@ -144,9 +153,10 @@ class Wyvern_Plugin {
 
         // Register the block
         register_block_type( 'wyvern-plugin/' . $block_name, array( 
-            'style'         => $block_name,
-            'editor_style'  => $block_name . '-editor',
-            'editor_script' => $block_name
+            'style'             => $block_name,
+            'editor_style'      => $block_name . '-editor',
+            'editor_script'     => $block_name,
+            'render_callback'   => [ $this, 'test_function' ],
         ) );
     }
 
@@ -160,6 +170,7 @@ class Wyvern_Plugin {
         $this->register_custom_block( 'block-02-stylesheets' );
         $this->register_custom_block( 'block-03-attributes' );
         $this->register_custom_block( 'block-04-toolbar' );
+        $this->register_custom_block( 'block-05-dynamic' );
     }
 
     /**
