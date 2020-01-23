@@ -22,9 +22,5 @@ registerBlockType( 'wyern-plugin/block-05-dynamic', {
         const post = posts[0];
 
         return <a className={ className } href={ post.link }>{ post.title.rendered }</a>;
-    } ),
-
-    save: ( props ) => {
-        return null;
-    },
+    } )
 } );

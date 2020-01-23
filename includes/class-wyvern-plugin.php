@@ -118,12 +118,18 @@ class Wyvern_Plugin {
     private function register_custom_block( $block_name ) {
         $plugin_path        = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name;
         $render_file        = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name . '/src/render.php';
-        $render_callback    = str_replace( '-', '_', $block_name ) . '_render_callback';
+        $render_callback    = '';
         $styles             = plugins_url( 'blocks/' . $block_name . '/css/style.css', __DIR__ );
         $editor_styles      = plugins_url( 'blocks/' . $block_name . '/css/editor.css', __DIR__ );
 
         // Clear the stat cache so that file_exists behaves properly
         clearstatcache();
+
+        // Include the render callback file
+        if ( file_exists( $render_file ) ) {
+            include_once( $render_file );
+            $render_callback = str_replace( '-', '_', $block_name ) . '_render_callback';
+        }
 
         // Automatically load dependencies and version
         $asset_file = include( $plugin_path . '/build/index.asset.php' );
@@ -156,7 +162,7 @@ class Wyvern_Plugin {
             'style'             => $block_name,
             'editor_style'      => $block_name . '-editor',
             'editor_script'     => $block_name,
-            'render_callback'   => [ $this, 'test_function' ],
+            'render_callback'   => $render_callback,
         ) );
     }
 

@@ -10,6 +10,6 @@ registerBlockType( 'wyvern-plugin/block-01-basic', {
     title:      'Block Example #1',
     icon:       'smiley',
     category:   'layout',
-    edit:       () => <div style={ blockStyle }>Hello, World!</div>,
-    save:       () => <div style={ blockStyle }>Hello, World!</div>,
+    edit:       ( props ) => <div style={ blockStyle }>Hello, World!</div>,
+    save:       ( props ) => { return null },
 } );
