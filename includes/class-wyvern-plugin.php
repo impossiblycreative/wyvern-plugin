@@ -94,6 +94,7 @@ class Wyvern_Plugin {
         $this->declare_public_hooks();
 
         // Register our custom Gutenberg blocks
+        add_filter( 'block_categories', array( $this, 'create_block_categories' ) );
         add_action( 'init', array( $this, 'register_custom_blocks' ) );
     }
 
@@ -102,10 +103,6 @@ class Wyvern_Plugin {
      */
     public function set_textdomain() {
         load_plugin_textdomain( 'wyvern-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-    }
-
-    public function test_function($attributes, $content) {
-        echo '<p>testing</p>';
     }
 
     /** 
@@ -172,11 +169,28 @@ class Wyvern_Plugin {
     public function register_custom_blocks() {
 
         // Register each block we need
-        $this->register_custom_block( 'block-01-basic' );
-        $this->register_custom_block( 'block-02-stylesheets' );
-        $this->register_custom_block( 'block-03-attributes' );
-        $this->register_custom_block( 'block-04-toolbar' );
-        $this->register_custom_block( 'block-05-dynamic' );
+        $this->register_custom_block( 'test-block-static' );
+        $this->register_custom_block( 'test-block-dynamic' );
+        $this->register_custom_block( 'test-block-media-uploader' );
+    }
+
+    /**
+     * Create our custom block categories.
+     */
+    public function create_block_categories( $categories ) {
+
+        // Create our categories
+        $new_category = array(
+            'slug'  => 'wyvern-plugin-blocks',
+            'title' => __( 'Wyvern Plugin Blocks', 'wyvern-plugin' ),
+            'icon'  => null,
+        );
+
+        // Get all of our current block categories
+        $slugs = wp_list_pluck( $categories, 'slug' );
+
+        // If the category exists, exit. Otherwise, add the category we want
+        return in_array( 'wyvern-plugin-blocks', $slugs, true ) ? $categories : array_merge( $categories, array( $new_category ) );
     }
 
     /**

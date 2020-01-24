@@ -4,14 +4,10 @@
   "description": "Test block",
   "main": "blocks/build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run build:block-01-basic && npm run build:block-02-stylesheets && npm run build:block-03-attributes && npm run build:block-04-toolbar && npm run build:block-05-dynamic",
-    "build:block-01-basic": "wp-scripts build blocks/block-01-basic/src/index.js --output-path=blocks/block-01-basic/build",
-    "build:block-02-stylesheets": "wp-scripts build blocks/block-02-stylesheets/src/index.js --output-path=blocks/block-02-stylesheets/build",
-    "build:block-03-attributes": "wp-scripts build blocks/block-03-attributes/src/index.js --output-path=blocks/block-03-attributes/build",
-    "build:block-04-toolbar": "wp-scripts build blocks/block-04-toolbar/src/index.js --output-path=blocks/block-04-toolbar/build",
-    "build:block-05-dynamic": "wp-scripts build blocks/block-05-dynamic/src/index.js --output-path=blocks/block-05-dynamic/build",
-    "scaffold-block": ""
+    "build": "npm run build:test-block-static && npm run build:test-block-dynamic && npm run build:test-block-media-uploader",
+    "build:test-block-static": "wp-scripts build blocks/test-block-static/src/index.js --output-path=blocks/test-block-static/build",
+    "build:test-block-dynamic": "wp-scripts build blocks/test-block-dynamic/src/index.js --output-path=blocks/test-block-dynamic/build",
+    "build:test-block-media-uploader": "wp-scripts build blocks/test-block-media-uploader/src/index.js --output-path=blocks/test-block-media-uploader/build"
   },
   "repository": {
     "type": "git",
@@ -24,6 +20,6 @@
   },
   "homepage": "https://github.com/impossiblycreative/wyvern-plugin#readme",
   "devDependencies": {
-    "@wordpress/scripts": "6.1.1"
+    "@wordpress/scripts": "^6.1.1"
   }
 }
