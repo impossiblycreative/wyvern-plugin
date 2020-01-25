@@ -1,0 +1,6 @@
+.debug-info {
+    background: var(--black);
+    color: var(--white);
+    margin-top: 20px;
+    padding: 10px;
+}

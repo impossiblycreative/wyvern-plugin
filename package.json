@@ -4,10 +4,11 @@
   "description": "Test block",
   "main": "blocks/build/index.js",
   "scripts": {
-    "build": "npm run build:test-block-static && npm run build:test-block-dynamic && npm run build:test-block-media-uploader",
+    "build": "npm run build:test-block-static && npm run build:test-block-dynamic && npm run build:test-block-media-uploader && npm run build:test-block-with-select",
     "build:test-block-static": "wp-scripts build blocks/test-block-static/src/index.js --output-path=blocks/test-block-static/build",
     "build:test-block-dynamic": "wp-scripts build blocks/test-block-dynamic/src/index.js --output-path=blocks/test-block-dynamic/build",
-    "build:test-block-media-uploader": "wp-scripts build blocks/test-block-media-uploader/src/index.js --output-path=blocks/test-block-media-uploader/build"
+    "build:test-block-media-uploader": "wp-scripts build blocks/test-block-media-uploader/src/index.js --output-path=blocks/test-block-media-uploader/build",
+    "build:test-block-with-select": "wp-scripts build blocks/test-block-with-select/src/index.js --output-path=blocks/test-block-with-select/build"
   },
   "repository": {
     "type": "git",

@@ -112,7 +112,7 @@ class Wyvern_Plugin {
      * @access  private
      * @var     string      $block_name The namespace friendly name of the block
      */
-    private function register_custom_block( $block_name ) {
+    private function register_custom_block( $block_name, $block_attributes = '' ) {
         $plugin_path        = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name;
         $render_file        = plugin_dir_path( __DIR__ ) . 'blocks/' . $block_name . '/src/render.php';
         $render_callback    = '';
@@ -155,11 +155,12 @@ class Wyvern_Plugin {
         );
 
         // Register the block
-        register_block_type( 'wyvern-plugin/' . $block_name, array( 
-            'style'             => $block_name,
+        register_block_type( 'wyvern-plugin/' . $block_name, array(
+            'attributes'        => $block_attributes,
             'editor_style'      => $block_name . '-editor',
             'editor_script'     => $block_name,
             'render_callback'   => $render_callback,
+            'style'             => $block_name,
         ) );
     }
 
@@ -168,10 +169,24 @@ class Wyvern_Plugin {
      */
     public function register_custom_blocks() {
 
+        // Set each block's attributes
+        $test_block_with_select = array(
+            'anchor' => array(
+                'type'      => 'string',
+            ),
+            'className' => array(
+                'type'      => 'string',
+            ),
+            'listTitle'   => array(
+                'type'      => 'string',
+            ),
+        );
+
         // Register each block we need
         $this->register_custom_block( 'test-block-static' );
         $this->register_custom_block( 'test-block-dynamic' );
         $this->register_custom_block( 'test-block-media-uploader' );
+        $this->register_custom_block( 'test-block-with-select', $test_block_with_select );
     }
 
     /**
