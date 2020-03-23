@@ -1,26 +1,24 @@
 {
-  "name": "wyvern-plugin",
-  "version": "1.0.0",
-  "description": "Test block",
-  "main": "blocks/build/index.js",
-  "scripts": {
-    "build": "npm run build:test-block-static && npm run build:test-block-dynamic && npm run build:test-block-media-uploader && npm run build:test-block-with-select",
-    "build:test-block-static": "wp-scripts build blocks/test-block-static/src/index.js --output-path=blocks/test-block-static/build",
-    "build:test-block-dynamic": "wp-scripts build blocks/test-block-dynamic/src/index.js --output-path=blocks/test-block-dynamic/build",
-    "build:test-block-media-uploader": "wp-scripts build blocks/test-block-media-uploader/src/index.js --output-path=blocks/test-block-media-uploader/build",
-    "build:test-block-with-select": "wp-scripts build blocks/test-block-with-select/src/index.js --output-path=blocks/test-block-with-select/build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/impossiblycreative/wyvern-plugin.git"
-  },
-  "author": "Adam Soucie",
-  "license": "GPL-3.0-or-later",
-  "bugs": {
-    "url": "https://github.com/impossiblycreative/wyvern-plugin/issues"
-  },
-  "homepage": "https://github.com/impossiblycreative/wyvern-plugin#readme",
-  "devDependencies": {
-    "@wordpress/scripts": "^6.1.1"
-  }
+	"name": "wyvern-plugin",
+	"version": "1.0.0",
+	"description": "Test block",
+	"main": "blocks/build/index.js",
+	"scripts": {
+		"scaffold-block": "bash scaffold-block.sh",
+		"build:post-meta": "wp-scripts build assets/js/src/post-meta.js --output-path=assets/js/build",
+		"build:featured-carousel": "wp-scripts build blocks/featured-carousel/src/index.js --output-path=blocks/featured-carousel/build"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/impossiblycreative/wyvern-plugin.git"
+	},
+	"author": "Adam Soucie",
+	"license": "GPL-3.0-or-later",
+	"bugs": {
+		"url": "https://github.com/impossiblycreative/wyvern-plugin/issues"
+	},
+	"homepage": "https://github.com/impossiblycreative/wyvern-plugin#readme",
+	"devDependencies": {
+		"@wordpress/scripts": "^6.1.1"
+	}
 }

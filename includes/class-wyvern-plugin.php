@@ -76,7 +76,7 @@ class Wyvern_Plugin {
         // Set our plugin's internal name
         $this->plugin_name = 'wyvern-plugin';
 
-        // Load any additional classes here
+        // Load any dependency files here
 
         // Set our plugin's textdomain
         add_action( 'init', array( $this, 'set_textdomain' ) );
@@ -96,6 +96,10 @@ class Wyvern_Plugin {
         // Register our custom Gutenberg blocks
         add_filter( 'block_categories', array( $this, 'create_block_categories' ) );
         add_action( 'init', array( $this, 'register_custom_blocks' ) );
+
+        // Register any post meta & associated scripts created by the plugin
+        add_action( 'init', array( $this, 'register_post_meta' ) );
+        add_action( 'enqueue_block_editor_assets', array( $this, 'block_editor_sidebar_assets' ) );
     }
 
     /**
@@ -103,6 +107,37 @@ class Wyvern_Plugin {
      */
     public function set_textdomain() {
         load_plugin_textdomain( 'wyvern-plugin', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    }
+
+    /**
+     * Registers any post meta created by the custom post types
+     */
+    public function register_post_meta() {
+        register_post_meta( 'post', 'feature_post', array(
+            'type'          => 'boolean',
+            'default'       => true,
+            'single'        => true,
+            'show_in_rest'  => true,
+            'auth_callback' => function() { 
+                return current_user_can( 'edit_posts' );
+            },
+        ) );
+    }
+
+    /**
+     * Enqueues any assets needed in the editor for the plugin
+     */
+    public function block_editor_sidebar_assets() {
+        $screen = get_current_screen();
+
+        if ( $screen->post_type === 'post' ) {
+            wp_enqueue_script(
+                'wyvern-plugin-post-meta',
+                plugins_url( 'assets/js/build/post-meta.js', __DIR__ ),
+                array( 'wp-i18n', 'wp-blocks', 'wp-edit-post', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post' ),
+                $this->$plugin_version,
+            );
+        }
     }
 
     /** 
@@ -170,23 +205,15 @@ class Wyvern_Plugin {
     public function register_custom_blocks() {
 
         // Set each block's attributes
-        $test_block_with_select = array(
-            'anchor' => array(
-                'type'      => 'string',
-            ),
+        $featured_carousel = array(
             'className' => array(
                 'type'      => 'string',
-            ),
-            'listTitle'   => array(
-                'type'      => 'string',
+                'default'   => '',
             ),
         );
 
         // Register each block we need
-        $this->register_custom_block( 'test-block-static' );
-        $this->register_custom_block( 'test-block-dynamic' );
-        $this->register_custom_block( 'test-block-media-uploader' );
-        $this->register_custom_block( 'test-block-with-select', $test_block_with_select );
+        $this->register_custom_block( 'featured-carousel', $featured_carousel );
     }
 
     /**
@@ -196,8 +223,8 @@ class Wyvern_Plugin {
 
         // Create our categories
         $new_category = array(
-            'slug'  => 'wyvern-plugin-blocks',
-            'title' => __( 'Wyvern Plugin Blocks', 'wyvern-plugin' ),
+            'slug'  => 'wyvern-blocks',
+            'title' => __( 'Wyvern Blocks', 'wyvern-plugin' ),
             'icon'  => null,
         );
 
@@ -205,13 +232,41 @@ class Wyvern_Plugin {
         $slugs = wp_list_pluck( $categories, 'slug' );
 
         // If the category exists, exit. Otherwise, add the category we want
-        return in_array( 'wyvern-plugin-blocks', $slugs, true ) ? $categories : array_merge( $categories, array( $new_category ) );
+        return in_array( 'wyvern-blocks', $slugs, true ) ? $categories : array_merge( $categories, array( $new_category ) );
+    }
+
+    /**
+     * Add columns to the appropriate post screens
+     */
+    public function custom_posts_columns( $columns ) {
+        $columns = array(
+            'cb'            => $columns['cb'],
+            'title'         => __( 'Title', 'wyvern-plugin' ),
+            'author'        => __( 'Written By', 'wyvern-plugin' ),
+            'categories'    => __( 'Categories', 'wyvern-plugin' ),
+            'tags'          => __( 'Tagged With', 'wyvern-plugin' ),
+            'featured'      => __( 'Featured?', 'wyvern-plugin' ),
+            'comments'      => __( 'Comments', 'wyvern-plugin' ),
+            'date'          => __( 'Posted On', 'wyvern-plugin' ),
+        );
+    
+        return $columns;
+    }
+
+    public function custom_posts_columns_content( $column, $post_id ) {
+        // Featured Post flag
+        if ( 'featured' === $column ) {
+            $is_featured = get_post_meta( $post_id, 'feature_post', true );
+            echo ( $is_featured ) ? __( 'Featured', 'wyvern-plugin' ) : __( 'No', 'wyvern-plugin' );
+        }
     }
 
     /**
      * Declare any admin-facing hooks.
      */
     private function declare_admin_hooks() {
+        $this->add_admin_hook( 'filter', 'manage_posts_columns', $this, 'custom_posts_columns' );
+        $this->add_admin_hook( 'action', 'manage_posts_custom_column', $this, 'custom_posts_columns_content', 10, 2 );
     }
 
     /**
@@ -238,7 +293,7 @@ class Wyvern_Plugin {
         $filters = $this->admin_hooks['filters'];
 
         foreach ( $filters as $filter ) {
-            add_action( $filter['hook'], array( $filter['instance'], $filter['callback'] ), $filter['priority'], $filter['num_args'] );
+            add_filter( $filter['hook'], array( $filter['instance'], $filter['callback'] ), $filter['priority'], $filter['num_args'] );
         }
 
         // Add our public actions
@@ -252,14 +307,14 @@ class Wyvern_Plugin {
         $filters = $this->public_hooks['filters'];
 
         foreach ( $filters as $filter ) {
-            add_action( $filter['hook'], array( $filter['instance'], $filter['callback'] ), $filter['priority'], $filter['num_args'] );
+            add_filter( $filter['hook'], array( $filter['instance'], $filter['callback'] ), $filter['priority'], $filter['num_args'] );
         }
     }
 
     /**
      * Utility function to add an admin hook to the appropriate admin hooks array.
      */
-    private function add_admin_hook( $type, $hook, $instance, $callback, $priority = 10, $num_args = 1 ) {
+    private function add_admin_hook( $type, $hook, $instance, $callback, $priority = 10, $num_args = 1 ) {        
         $new_hook = array(
             'hook'      => $hook,
             'instance'  => $instance,
