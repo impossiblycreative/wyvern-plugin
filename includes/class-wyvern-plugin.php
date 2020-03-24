@@ -258,6 +258,7 @@ class Wyvern_Plugin {
             'categories'    => __( 'Categories', 'wyvern-plugin' ),
             'tags'          => __( 'Tagged With', 'wyvern-plugin' ),
             'featured'      => __( 'Featured?', 'wyvern-plugin' ),
+            'likes'         => __( 'Likes', 'wyvern-plugin' ),
             'comments'      => __( 'Comments', 'wyvern-plugin' ),
             'date'          => __( 'Posted On', 'wyvern-plugin' ),
         );
@@ -270,6 +271,12 @@ class Wyvern_Plugin {
         if ( 'featured' === $column ) {
             $is_featured = get_post_meta( $post_id, 'feature_post', true );
             echo ( $is_featured ) ? __( 'Featured', 'wyvern-plugin' ) : __( 'No', 'wyvern-plugin' );
+        }
+
+        // Post Likes
+        if ( 'likes' === $column ) {
+            $like_count = get_post_meta( $post_id, '_wyvern_likes', true ) ? get_post_meta( $post_id, '_wyvern_likes', true ) : 0;
+            echo $like_count;
         }
     }
 
