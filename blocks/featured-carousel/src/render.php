@@ -36,7 +36,80 @@ function featured_carousel_render_callback( $attributes, $content = '' ) {
                             <?php $featured_posts->the_post(); ?>
 
                             <div class="slide" data-slide-number="<?php echo esc_html( $featured_posts_count ); ?>">
-                                <?php echo the_title(); ?>
+                                <?php $post_id = get_the_id(); ?>
+
+                                <!-- Featured Image -->
+                                <?php if ( has_post_thumbnail( $post_id ) ) : ?>
+                                    <a class="slide-image-container" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
+                                        <?php echo get_the_post_thumbnail( $post_id, 'slide', array( 'class' => 'slide-image' ) ); ?>
+                                    </a>
+                                <?php else : ?>
+                                    <a class="slide-image-container" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
+                                        <img class="slide-image" src="<?php echo esc_url( plugins_url( 'img/default-featured-image.jpg', dirname(__FILE__) ) ); ?>">
+                                    </a>
+                                <?php endif; ?>
+
+                                <!-- Post Information -->
+                                <div class="slide-content">
+                                    <?php $post_categories = wp_get_post_categories( $post_id ); ?>
+
+                                    <!-- Post Categories -->
+                                    <?php if ( $post_categories ) : ?>
+                                        <ul class="categories-list">
+                                            <?php foreach( $post_categories as $category) : ?>
+                                                <?php $current_cat = get_category( $category ); ?>
+
+                                                <li class="categories-list-item">
+                                                    <a href="<?php echo esc_url( get_category_link( $current_cat ) ); ?>"><?php echo esc_html( $current_cat->name ); ?></a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+
+                                    <!-- Post Title -->
+                                    <h2 class="post-title">
+                                        <a href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
+                                            <?php echo esc_html( get_the_title( $post_id ) ); ?>
+                                        </a>
+                                    </h2>
+
+                                    <!-- Post Meta -->
+                                    <div class="post-meta">
+                                        
+                                        <!-- Post Date -->
+                                        <span class="post-date">
+                                            <span class="fas fa-calendar-alt"></span>
+                                            <span class="post-date-text"><?php echo esc_html( get_the_date( 'F jS, Y', $post_id ) ); ?></span>
+                                        </span>
+
+                                        <!-- Post Comment Count -->
+                                        <span class="post-comment-count">
+                                            <span class="fas fa-comments"></span>
+                                            <?php echo get_comments_number( $post_id ); ?>
+                                        </span>
+
+                                        <!-- Post Likes -->
+                                        <?php $post_likes = get_post_meta( $post_id, '_wyvern_likes', true ) ? get_post_meta( $post_id, '_wyvern_likes', true ) : 0; ?>
+                                        <span class="post-like-count">
+                                            <span class="fas fa-heart"></span>
+                                            <span class="post-like-count-number"><?php echo esc_html( $post_likes ); ?></span>
+                                        </span>
+
+                                        <!-- Post Excerpt -->
+                                        <p class="post-excerpt"><?php echo esc_html( get_the_excerpt( $post_id ) ); ?></p>
+
+                                        <!-- Read More Link -->
+                                        <a class="read-more" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
+                                            <span class="button read-more-button">
+                                                <span class="read-more-text">
+                                                    <span><?php esc_html_e( 'Read More', 'wyvern-plugin' ); ?></span>
+                                                    <span class="screen-reader-text">... of <?php esc_html( get_the_title( $post_id ) ); ?></span>
+                                                </span>
+                                                <span class="icon fas fa-book-reader"></span>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
 
                             <?php $featured_posts_count++; ?>

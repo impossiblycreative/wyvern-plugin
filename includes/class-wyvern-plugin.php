@@ -166,6 +166,7 @@ class Wyvern_Plugin {
         // Automatically load dependencies and version
         $asset_file = include( $plugin_path . '/build/index.asset.php' );
 
+
         // Make the script available to WordPress
         wp_register_script( 
             $block_name, 
@@ -174,28 +175,39 @@ class Wyvern_Plugin {
             $asset_file['version'] 
         );
 
-        // Register the front-end and editor stylesheets
-        wp_register_style(
-            $block_name . '-editor',
-            $editor_styles,
-            array( 'wp-edit-blocks' ), 
-            $asset_file['version']
-        );
+        // Register the front-end and editor stylesheets IF the file size is > 0.
+        $block_styles_name  = NULL;
+        $editor_styles_name = NULL;
 
-        wp_register_style(
-            $block_name,
-            $styles,
-            array(), 
-            $asset_file['version']
-        );
+        if ( file_get_contents( $editor_styles ) ) {
+            wp_register_style(
+                $block_name . '-editor',
+                $editor_styles,
+                array( 'wp-edit-blocks' ), 
+                $asset_file['version']
+            );
+
+            $editor_styles_name = $block_name . '-editor';
+        }
+
+        if ( file_get_contents( $styles ) ) {
+            wp_register_style(
+                $block_name,
+                $styles,
+                array(), 
+                $asset_file['version']
+            );
+
+            $block_styles_name = $block_name;
+        }
 
         // Register the block
         register_block_type( 'wyvern-plugin/' . $block_name, array(
             'attributes'        => $block_attributes,
-            'editor_style'      => $block_name . '-editor',
+            'editor_style'      => $editor_styles_name,
             'editor_script'     => $block_name,
             'render_callback'   => $render_callback,
-            'style'             => $block_name,
+            'style'             => $block_styles_name,
         ) );
     }
 
