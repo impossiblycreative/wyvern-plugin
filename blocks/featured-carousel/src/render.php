@@ -13,8 +13,9 @@ function featured_carousel_render_callback( $attributes, $content = '' ) {
 
     // Set up the query
     $featured_posts_args = array( 
-        'post_type'     => 'post', 
-        'meta_query'    => array(
+        'post_type'         => 'post',
+        'posts_per_page'    => -1,
+        'meta_query'        => array(
             array(
                 'key'       => 'feature_post',
                 'value'     => true,

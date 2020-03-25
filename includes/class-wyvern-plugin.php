@@ -224,8 +224,29 @@ class Wyvern_Plugin {
             ),
         );
 
+        // FAQs container
+        $faqs_category = array(
+            'className' => array(
+                'type'      => 'string',
+                'default'   => '',
+            ),
+            'faqCategory' => array(
+                'type'      => 'string',
+            ),
+        );
+
+        // Single FAQ
+        $faq = array(
+            'className' => array(
+                'type'      => 'string',
+                'default'   => '',
+            ),
+        );
+
         // Register each block we need
         $this->register_custom_block( 'featured-carousel', $featured_carousel );
+        $this->register_custom_block( 'faqs-category', $faqs_category );
+        //$this->register_custom_block( 'faq', $faq );
     }
 
     /**

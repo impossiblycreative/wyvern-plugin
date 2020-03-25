@@ -56,10 +56,13 @@ add_action( 'init', 'wyvern_plugin_include_CPTs' );
 function wyvern_plugin_register_CPTs() {
 
     // Get an instance of each post type
+    $faqs = new Wyvern_FAQs();
 
     // Call the registration function
+    $faqs->register_post_type();
 
     // Call the taxonomy setup functions if needed here
+    $faqs->register_taxonomy();
 }
 add_action( 'init', 'wyvern_plugin_register_CPTs' );
 
@@ -79,6 +82,7 @@ function wyvern_plugin_activate() {
 function wyvern_plugin_deactivate() {
     
     // Destroy our custom post types using unregister_post_type()
+    unregister_post_type( 'wyvern_faqs' );
 
     // Reset the permalinks
     flush_rewrite_rules();

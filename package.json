@@ -6,7 +6,9 @@
 	"scripts": {
 		"scaffold-block": "bash scaffold-block.sh",
 		"build:post-meta": "wp-scripts build assets/js/src/post-meta.js --output-path=assets/js/build",
-		"build:featured-carousel": "wp-scripts build blocks/featured-carousel/src/index.js --output-path=blocks/featured-carousel/build"
+		"build:featured-carousel": "wp-scripts build blocks/featured-carousel/src/index.js --output-path=blocks/featured-carousel/build",
+		"build:faqs-category": "wp-scripts build blocks/faqs-category/src/index.js --output-path=blocks/faqs-category/build",
+		"build:faq": "wp-scripts build blocks/faq/src/index.js --output-path=blocks/faq/build"
 	},
 	"repository": {
 		"type": "git",
