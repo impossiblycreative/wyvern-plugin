@@ -225,7 +225,7 @@ class Wyvern_Plugin {
         );
 
         // FAQs container
-        $faqs_category = array(
+        $faqs = array(
             'className' => array(
                 'type'      => 'string',
                 'default'   => '',
@@ -235,18 +235,9 @@ class Wyvern_Plugin {
             ),
         );
 
-        // Single FAQ
-        $faq = array(
-            'className' => array(
-                'type'      => 'string',
-                'default'   => '',
-            ),
-        );
-
         // Register each block we need
         $this->register_custom_block( 'featured-carousel', $featured_carousel );
-        $this->register_custom_block( 'faqs-category', $faqs_category );
-        //$this->register_custom_block( 'faq', $faq );
+        $this->register_custom_block( 'faqs', $faqs );
     }
 
     /**
@@ -301,12 +292,42 @@ class Wyvern_Plugin {
         }
     }
 
+    public function custom_wyvern_faqs_columns( $columns ) {
+        $columns = array(
+            'cb'                => $columns['cb'],
+            'title'             => __( 'Title', 'wyvern-plugin' ),
+            'faq-categories'    => __( 'FAQ Categories', 'wyvern-plugin' ),
+        );
+
+        return $columns;
+    }
+
+    public function custom_wyvern_faqs_columns_content( $column, $post_id ) {
+        // Categories - use the custom taxonomy
+        if ( 'faq-categories' === $column ) {
+            $categories = get_the_terms( $post_id, 'wyvern_faq_categories' );
+
+            for ( $i = 0; $i < count( $categories ); $i++ ) {
+                $name = $categories[$i]->name;
+
+                if ( $i !== 0 ) {
+                    echo ', ';
+                }
+
+                echo '<a href="/wp-admin/edit.php?wyvern_faq_categories=' . sanitize_title( $name ) . '&post_type=wyvern_faqs">' . $name . '</a>'; 
+            }
+        }
+    }
+
     /**
      * Declare any admin-facing hooks.
      */
     private function declare_admin_hooks() {
         $this->add_admin_hook( 'filter', 'manage_posts_columns', $this, 'custom_posts_columns' );
         $this->add_admin_hook( 'action', 'manage_posts_custom_column', $this, 'custom_posts_columns_content', 10, 2 );
+
+        $this->add_admin_hook( 'filter', 'manage_wyvern_faqs_posts_columns', $this, 'custom_wyvern_faqs_columns' );
+        $this->add_admin_hook( 'action', 'manage_wyvern_faqs_posts_custom_column', $this, 'custom_wyvern_faqs_columns_content', 10, 2 );
     }
 
     /**

@@ -1,12 +1,25 @@
 <?php
 
-function faqs_category_render_callback( $attributes, $content = '' ) {
+function faqs_render_callback( $attributes, $content = '' ) {
     $html = '¡ERROR - BLOCK OUTPUT FAILED!';
 
     // Get our data
-    $block_classes          = ( $attributes['className'] ) ? $attributes['className'] : 'wp-block-wyvern-plugin-faqs-category';
+    $block_classes          = ( $attributes['className'] ) ? $attributes['className'] : 'wp-block-wyvern-plugin-faqs';
     $block_id               = rand( 0, 100 );
+    $faq_category           = get_term( $attributes['faqCategory'] )->slug;
     $faq_counter            = 0;
+    $tax_query              = NULL;
+
+    if ( !empty( $faq_category ) ) {
+        $tax_query = array(
+            array(
+                'taxonomy'          => 'wyvern_faq_categories',
+                'field'             => 'slug',
+                'terms'             => $faq_category,
+                'include_children'	=> 0
+            ),
+        );
+    }
 
     // Begin our output
     ob_start();
@@ -15,6 +28,7 @@ function faqs_category_render_callback( $attributes, $content = '' ) {
     $faqs_args = array( 
         'post_type'         => 'wyvern_faqs',
         'posts_per_page'    => -1,
+        'tax_query'         => ( $tax_query ) ? $tax_query : '',
         'orderby'           => 'page_order',
         'order'             => 'ASC',
     );
@@ -34,7 +48,7 @@ function faqs_category_render_callback( $attributes, $content = '' ) {
                         <?php $faq_counter++; ?>
 
                         <div id="faq-<?php echo $faq_counter; ?>" class="faq">
-                            <h3 id="faq-<?php echo $faq_counter; ?>-header" class="faq-header">
+                            <h3 id="faq-<?php echo $faq_counter; ?>-header" class="faq-header accordion-header">
                                 <button class="accordion-trigger" aria-controls="faq-<?php echo $faq_counter; ?>-content" aria-expanded="<?php echo ( $faq_counter === 1 ) ? 'true' : 'false' ; ?>" <?php echo ( $faq_counter === 1 ) ? 'aria-disabled="true"' : ''; ?>>
                                     <span class="faq-header-text"><?php echo esc_html( get_the_title() ); ?></span>
                                     <span class="fas <?php echo ( $faq_counter === 1 ) ? 'fa-minus' : 'fa-plus'; ?>"></span>
