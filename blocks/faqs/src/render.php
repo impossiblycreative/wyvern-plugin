@@ -47,15 +47,15 @@ function faqs_render_callback( $attributes, $content = '' ) {
                         <?php $faqs->the_post(); ?>
                         <?php $faq_counter++; ?>
 
-                        <div id="faq-<?php echo $faq_counter; ?>" class="faq">
+                        <div id="faq-<?php echo $faq_counter; ?>" class="faq" itemscope itemprop="mainEntity" itemtype="https://schema.org/Question">
                             <h3 id="faq-<?php echo $faq_counter; ?>-header" class="faq-header accordion-header">
                                 <button class="accordion-trigger" aria-controls="faq-<?php echo $faq_counter; ?>-content" aria-expanded="<?php echo ( $faq_counter === 1 ) ? 'true' : 'false' ; ?>" <?php echo ( $faq_counter === 1 ) ? 'aria-disabled="true"' : ''; ?>>
-                                    <span class="faq-header-text"><?php echo esc_html( get_the_title() ); ?></span>
+                                    <span class="faq-header-text" itemprop="name"><?php echo esc_html( get_the_title() ); ?></span>
                                     <span class="fas <?php echo ( $faq_counter === 1 ) ? 'fa-minus' : 'fa-plus'; ?>"></span>
                                 </button>
                             </h3>
-                            <div id="faq-<?php echo $faq_counter; ?>-content" class="faq-content accordion-panel" role="region" aria-labelledby="faq-<?php echo $faq_counter; ?>-header" <?php echo ( $faq_counter === 1 ) ? '' : 'hidden'; ?>>
-                                <?php echo wp_kses_post( get_the_content() ); ?>
+                            <div id="faq-<?php echo $faq_counter; ?>-content" class="faq-content-container accordion-panel" role="region" aria-labelledby="faq-<?php echo $faq_counter; ?>-header" <?php echo ( $faq_counter === 1 ) ? '' : 'hidden'; ?> itemscope itemprop="acceptedAnswer" itemtype="https://schema.org/Answer">
+                                <div class="faq-content accordion-content" itemprop="text"><?php echo wp_kses_post( get_the_content() ); ?></div>
                             </div>
                         </div>
                     <?php endwhile; ?>
