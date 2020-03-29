@@ -235,9 +235,17 @@ class Wyvern_Plugin {
             ),
         );
 
+        $posts_with_filters = array(
+            'className' => array(
+                'type'      => 'string',
+                'default'   => '',
+            ),
+        );
+
         // Register each block we need
         $this->register_custom_block( 'featured-carousel', $featured_carousel );
         $this->register_custom_block( 'faqs', $faqs );
+        $this->register_custom_block( 'posts-with-filters', $posts_with_filters );
     }
 
     /**

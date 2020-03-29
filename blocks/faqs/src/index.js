@@ -122,7 +122,9 @@ registerBlockType( 'wyvern-plugin/faqs' , {
                                         <span className="fas fa-plus"></span>
                                     </button>
                                 </h3>
-                                <div id={ 'faq-' + index + '-content' } class="faq-content accordion-panel" role="region" dangerouslySetInnerHTML={ {__html: value.content.rendered } }></div>
+                                <div id={ 'faq-' + index + '-content' } class="faq-content-container accordion-panel" role="region">
+                                    <div class="faq-content accordion-content" dangerouslySetInnerHTML={ {__html: value.content.rendered } }></div>
+                                </div>
                             </div>
                         )
                     } ) }
