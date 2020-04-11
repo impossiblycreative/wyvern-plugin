@@ -46,70 +46,72 @@ function posts_with_filters_render_callback( $attributes, $content = '' ) {
             <!-- Posts Display -->
             <?php if ( $posts->have_posts() ) : ?>
                 <div id="posts-container-<?php echo $block_id; ?>" class="posts-container">
-                    <?php while ( $posts->have_posts() ) : ?>
-                        <?php $posts->the_post(); ?>
-                        <?php $post_id = get_the_ID(); ?>
+                    <div id="posts-container-wrapper-<?php echo $block_id; ?>" class="wrapper">
+                        <?php while ( $posts->have_posts() ) : ?>
+                            <?php $posts->the_post(); ?>
+                            <?php $post_id = get_the_ID(); ?>
 
-                        <div class="post-card">
-                            <a class="post-card-image-container" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
-                                <?php if ( has_post_thumbnail( $post_id ) ) : ?>
-                                    <?php echo get_the_post_thumbnail( $post_id, 'post-card', array( 'class' => 'post-card-image' ) ); ?>
-                                <?php endif; ?>
-                            </a>
-
-                            <div class="post-card-content">
-                                <?php $post_categories = wp_get_post_categories( $post_id ); ?>
-                                <?php if ( $post_categories ) : ?>
-                                    <ul class="categories-list">
-                                        <?php foreach( $post_categories as $category) : ?>
-                                            <?php $current_cat = get_category( $category ); ?>
-
-                                            <li class="categories-list-item">
-                                                <a href="<?php echo esc_url( get_category_link( $current_cat ) ); ?>"><?php echo esc_html( $current_cat->name ); ?></a>
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                <?php endif; ?>
-
-                                <h2 class="post-title">
-                                    <a href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
-                                        <?php echo esc_html( get_the_title( $post_id ) ); ?>
-                                    </a>
-                                </h2>
-                                
-                                <?php $post_likes = get_post_meta( $post_id, '_wyvern_likes', true ) ? get_post_meta( $post_id, '_wyvern_likes', true ) : 0; ?>
-                                        
-                                <div class="post-meta">
-                                    <span class="post-date">
-                                        <span class="fas fa-calendar-alt"></span>
-                                        <span class="post-date-text"><?php echo esc_html( get_the_date( 'F jS, Y', $post_id ) ); ?></span>
-                                    </span>
-
-                                    <span class="post-comment-count">
-                                        <span class="fas fa-comments"></span>
-                                        <?php echo get_comments_number( $post_id ); ?>
-                                    </span>
-
-                                    <span class="post-like-count">
-                                        <span class="fas fa-heart"></span>
-                                        <span class="post-like-count-number"><?php echo esc_html( $post_likes ); ?></span>
-                                    </span>
-                                </div>
-
-                                <p class="post-excerpt"><?php echo esc_html( get_the_excerpt( $post_id ) ); ?></p>
-
-                                <a class="read-more" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
-                                    <span class="button read-more-button">
-                                        <span class="read-more-text">
-                                            <span><?php esc_html_e( 'Read More', 'wyvern-plugin' ); ?></span>
-                                            <span class="screen-reader-text">... of <?php esc_html( get_the_title( $post_id ) ); ?></span>
-                                        </span>
-                                        <span class="icon fas fa-book-reader"></span>
-                                    </span>
+                            <div class="post-card">
+                                <a class="post-card-image-container" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
+                                    <?php if ( has_post_thumbnail( $post_id ) ) : ?>
+                                        <?php echo get_the_post_thumbnail( $post_id, 'post-card', array( 'class' => 'post-card-image' ) ); ?>
+                                    <?php endif; ?>
                                 </a>
+
+                                <div class="post-card-content">
+                                    <?php $post_categories = wp_get_post_categories( $post_id ); ?>
+                                    <?php if ( $post_categories ) : ?>
+                                        <ul class="categories-list">
+                                            <?php foreach( $post_categories as $category) : ?>
+                                                <?php $current_cat = get_category( $category ); ?>
+
+                                                <li class="categories-list-item">
+                                                    <a href="<?php echo esc_url( get_category_link( $current_cat ) ); ?>"><?php echo esc_html( $current_cat->name ); ?></a>
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                    <?php endif; ?>
+
+                                    <h2 class="post-title">
+                                        <a href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
+                                            <?php echo esc_html( get_the_title( $post_id ) ); ?>
+                                        </a>
+                                    </h2>
+                                    
+                                    <?php $post_likes = get_post_meta( $post_id, '_wyvern_likes', true ) ? get_post_meta( $post_id, '_wyvern_likes', true ) : 0; ?>
+                                            
+                                    <div class="post-meta">
+                                        <span class="post-date">
+                                            <span class="fas fa-calendar-alt"></span>
+                                            <span class="post-date-text"><?php echo esc_html( get_the_date( 'F jS, Y', $post_id ) ); ?></span>
+                                        </span>
+
+                                        <span class="post-comment-count">
+                                            <span class="fas fa-comments"></span>
+                                            <?php echo get_comments_number( $post_id ); ?>
+                                        </span>
+
+                                        <span class="post-like-count">
+                                            <span class="fas fa-heart"></span>
+                                            <span class="post-like-count-number"><?php echo esc_html( $post_likes ); ?></span>
+                                        </span>
+                                    </div>
+
+                                    <p class="post-excerpt"><?php echo esc_html( get_the_excerpt( $post_id ) ); ?></p>
+
+                                    <a class="read-more" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
+                                        <span class="button read-more-button">
+                                            <span class="read-more-text">
+                                                <span><?php esc_html_e( 'Read More', 'wyvern-plugin' ); ?></span>
+                                                <span class="screen-reader-text">... of <?php esc_html( get_the_title( $post_id ) ); ?></span>
+                                            </span>
+                                            <span class="icon fas fa-book-reader"></span>
+                                        </span>
+                                    </a>
+                                </div>
                             </div>
-                        </div>
-                    <?php endwhile; ?>
+                        <?php endwhile; ?>
+                    </div>
                 </div>
 
                 <?php wp_reset_postdata(); ?>
@@ -202,7 +204,7 @@ function posts_with_filters_render_callback( $attributes, $content = '' ) {
                         const categoryName      = this.getAttribute( 'data-category-name' );
                         const nonce             = this.getAttribute( 'data-nonce' );
                         const updateBox         = document.getElementById( 'posts-filter-description-<?php echo $block_id; ?>' );
-                        const postsContainer    = document.getElementById( 'posts-container-<?php echo $block_id; ?>' );
+                        const postsContainer    = document.getElementById( 'posts-container-wrapper-<?php echo $block_id; ?>' );
                         let postsHTML           = '';
 
                         // Check if we're requesting a category
