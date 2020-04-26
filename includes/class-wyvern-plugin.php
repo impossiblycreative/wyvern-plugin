@@ -235,6 +235,7 @@ class Wyvern_Plugin {
             ),
         );
 
+        // Posts with Filters
         $posts_with_filters = array(
             'className' => array(
                 'type'      => 'string',
@@ -242,10 +243,25 @@ class Wyvern_Plugin {
             ),
         );
 
+        // Newsletter Signup
+        $newsletter = array(
+            'className' => array(
+                'type'      => 'string',
+                'default'   => '',
+            ),
+            'prompt' => array(
+                'type'      => 'string',
+            ),
+            'formName' => array(
+                'type'      => 'string',
+            ),
+        );
+
         // Register each block we need
         $this->register_custom_block( 'featured-carousel', $featured_carousel );
         $this->register_custom_block( 'faqs', $faqs );
         $this->register_custom_block( 'posts-with-filters', $posts_with_filters );
+        $this->register_custom_block( 'newsletter', $newsletter );
     }
 
     /**

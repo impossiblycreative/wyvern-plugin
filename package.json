@@ -8,7 +8,8 @@
 		"build:post-meta": "wp-scripts build assets/js/src/post-meta.js --output-path=assets/js/build",
 		"build:featured-carousel": "wp-scripts build blocks/featured-carousel/src/index.js --output-path=blocks/featured-carousel/build",
 		"build:faqs": "wp-scripts build blocks/faqs/src/index.js --output-path=blocks/faqs/build",
-		"build:posts-with-filters": "wp-scripts build blocks/posts-with-filters/src/index.js --output-path=blocks/posts-with-filters/build"
+		"build:posts-with-filters": "wp-scripts build blocks/posts-with-filters/src/index.js --output-path=blocks/posts-with-filters/build",
+		"build:newsletter": "wp-scripts build blocks/newsletter/src/index.js --output-path=blocks/newsletter/build"
 	},
 	"repository": {
 		"type": "git",
