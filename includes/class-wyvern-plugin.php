@@ -217,6 +217,13 @@ class Wyvern_Plugin {
     public function register_custom_blocks() {
 
         // Set each block's attributes
+        $featured_posts = array(
+            'className' => array(
+                'type'      => 'string',
+                'default'   => '',
+            ),
+        );
+
         $featured_carousel = array(
             'className' => array(
                 'type'      => 'string',
@@ -258,6 +265,7 @@ class Wyvern_Plugin {
         );
 
         // Register each block we need
+        $this->register_custom_block( 'featured-posts', $featured_posts );
         $this->register_custom_block( 'featured-carousel', $featured_carousel );
         $this->register_custom_block( 'faqs', $faqs );
         $this->register_custom_block( 'posts-with-filters', $posts_with_filters );
