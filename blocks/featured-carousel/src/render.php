@@ -8,9 +8,6 @@ function featured_carousel_render_callback( $attributes, $content = '' ) {
     $block_id               = rand( 0, 100 );
     $featured_posts_count   = 1;
 
-    // Begin our output
-    ob_start();
-
     // Set up the query
     $featured_posts_args = array( 
         'post_type'         => 'post',
@@ -26,6 +23,9 @@ function featured_carousel_render_callback( $attributes, $content = '' ) {
 
     // Perform the query
     $featured_posts = new WP_Query( $featured_posts_args );
+
+    // Begin our output
+    ob_start();
 
     // Do our html and such
     ?>

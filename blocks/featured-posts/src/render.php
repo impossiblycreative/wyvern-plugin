@@ -37,11 +37,16 @@ function featured_posts_render_callback( $attributes, $content = '' ) {
                         <?php $post_counter++; ?>
                         <div class="featured-post-container <?php echo ( $post_counter === 1 ) ? 'big' : 'standard'; ?>">
                             <?php $post_id = get_the_id(); ?>
+                            <?php $has_video = !empty( get_post_meta( $post_id, 'featured_video', true ) ); ?>
 
                             <!-- Featured Image -->
                             <?php if ( has_post_thumbnail( $post_id ) ) : ?>
                                 <a class="post-image-container" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
                                     <?php echo get_the_post_thumbnail( $post_id, 'slide', array( 'class' => 'post-image' ) ); ?>
+
+                                    <?php if ( $has_video ) : ?>
+                                        <span class="video-icon fas fa-video"></span>
+                                    <?php endif; ?>
                                 </a>
                             <?php else : ?>
                                 <a class="post-image-container" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">

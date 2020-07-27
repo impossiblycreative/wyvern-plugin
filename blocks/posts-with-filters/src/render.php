@@ -50,11 +50,16 @@ function posts_with_filters_render_callback( $attributes, $content = '' ) {
                         <?php while ( $posts->have_posts() ) : ?>
                             <?php $posts->the_post(); ?>
                             <?php $post_id = get_the_ID(); ?>
+                            <?php $has_video = !empty( get_post_meta( $post_id, 'featured_video', true ) ); ?>
 
                             <div class="post-card">
                                 <a class="post-card-image-container" href="<?php echo esc_url( get_the_permalink( $post_id ) ); ?>">
                                     <?php if ( has_post_thumbnail( $post_id ) ) : ?>
                                         <?php echo get_the_post_thumbnail( $post_id, 'post-card', array( 'class' => 'post-card-image' ) ); ?>
+                                    <?php endif; ?>
+
+                                    <?php if ( $has_video ) : ?>
+                                        <span class="video-icon fas fa-video"></span>
                                     <?php endif; ?>
                                 </a>
 

@@ -122,6 +122,16 @@ class Wyvern_Plugin {
                 return current_user_can( 'edit_posts' );
             },
         ) );
+
+        register_post_meta( 'post', 'featured_video', array(
+            'type'          => 'string',
+            'default'       => '',
+            'single'        => true,
+            'show_in_rest'  => true,
+            'auth_callback' => function() { 
+                return current_user_can( 'edit_posts' );
+            },
+        ) );
     }
 
     /**
@@ -129,13 +139,14 @@ class Wyvern_Plugin {
      */
     public function block_editor_sidebar_assets() {
         $screen = get_current_screen();
+        $dependencies = ['wp-i18n', 'wp-blocks', 'wp-edit-post', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post' ];
 
-        if ( $screen->post_type === 'post' ) {
-            wp_enqueue_script(
-                'wyvern-plugin-post-meta',
+        if ( ( $screen->post_type ) === 'post' ) {
+            wp_enqueue_script( 
+                'wyvern-plugin-post-meta', 
                 plugins_url( 'assets/js/build/post-meta.js', __DIR__ ),
-                array( 'wp-i18n', 'wp-blocks', 'wp-edit-post', 'wp-element', 'wp-editor', 'wp-components', 'wp-data', 'wp-plugins', 'wp-edit-post' ),
-                $this->$plugin_version,
+                $dependencies,
+                $this->$plugin_version
             );
         }
     }
