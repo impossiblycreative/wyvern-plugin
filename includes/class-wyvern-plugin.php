@@ -177,7 +177,6 @@ class Wyvern_Plugin {
         // Automatically load dependencies and version
         $asset_file = include( $plugin_path . '/build/index.asset.php' );
 
-
         // Make the script available to WordPress
         wp_register_script( 
             $block_name, 
@@ -190,7 +189,7 @@ class Wyvern_Plugin {
         $block_styles_name  = NULL;
         $editor_styles_name = NULL;
 
-        if ( file_get_contents( $editor_styles ) ) {
+        if ( is_file( $editor_styles ) > 0 ) {
             wp_register_style(
                 $block_name . '-editor',
                 $editor_styles,
@@ -201,7 +200,7 @@ class Wyvern_Plugin {
             $editor_styles_name = $block_name . '-editor';
         }
 
-        if ( file_get_contents( $styles ) ) {
+        if ( is_file( $styles ) > 0 ) {
             wp_register_style(
                 $block_name,
                 $styles,
@@ -306,24 +305,30 @@ class Wyvern_Plugin {
      * Add columns to the appropriate post screens
      */
     public function custom_posts_columns( $columns ) {
-        $columns = array(
-            'cb'            => $columns['cb'],
-            'title'         => __( 'Title', 'wyvern-plugin' ),
-            'author'        => __( 'Written By', 'wyvern-plugin' ),
-            'categories'    => __( 'Categories', 'wyvern-plugin' ),
-            'tags'          => __( 'Tagged With', 'wyvern-plugin' ),
-            'featured'      => __( 'Featured?', 'wyvern-plugin' ),
-            'likes'         => __( 'Likes', 'wyvern-plugin' ),
-            'comments'      => __( 'Comments', 'wyvern-plugin' ),
-            'date'          => __( 'Posted On', 'wyvern-plugin' ),
-        );
+        $post_type = get_post_type( get_the_ID() );
+
+        if ( 'product' !== $post_type ) {
+            $columns = array(
+                'cb'            => $columns['cb'],
+                'title'         => __( 'Title', 'wyvern-plugin' ),
+                'author'        => __( 'Written By', 'wyvern-plugin' ),
+                'categories'    => __( 'Categories', 'wyvern-plugin' ),
+                'tags'          => __( 'Tagged With', 'wyvern-plugin' ),
+                'featured'      => __( 'Featured?', 'wyvern-plugin' ),
+                'likes'         => __( 'Likes', 'wyvern-plugin' ),
+                'comments'      => __( 'Comments', 'wyvern-plugin' ),
+                'date'          => __( 'Posted On', 'wyvern-plugin' ),
+            );
+        }
     
         return $columns;
     }
 
     public function custom_posts_columns_content( $column, $post_id ) {
+        $post_type = get_post_type( $post_id );
+
         // Featured Post flag
-        if ( 'featured' === $column ) {
+        if ( 'featured' === $column && 'product' !== $post_type ) {
             $is_featured = get_post_meta( $post_id, 'feature_post', true );
             echo ( $is_featured ) ? __( 'Featured', 'wyvern-plugin' ) : __( 'No', 'wyvern-plugin' );
         }
