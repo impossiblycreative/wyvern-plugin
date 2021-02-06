@@ -115,7 +115,7 @@ class Wyvern_Plugin {
     public function register_post_meta() {
         register_post_meta( 'post', 'feature_post', array(
             'type'          => 'boolean',
-            'default'       => true,
+            'default'       => false,
             'single'        => true,
             'show_in_rest'  => true,
             'auth_callback' => function() { 
