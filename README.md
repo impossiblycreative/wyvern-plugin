@@ -23,3 +23,5 @@ is still a work in progress. I'll updated the instructions when I feel like thin
 
 ## Credits
 - Block icons by [Font Awesome](https://fontawesome.com)
+
+Updating for a PR...
